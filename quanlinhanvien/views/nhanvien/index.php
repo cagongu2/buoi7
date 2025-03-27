@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Danh sách nhân viên</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -66,32 +67,38 @@
             <tbody>
                 <?php foreach ($nhanviens as $nv): ?>
                     <tr>
-                        <td><?= $nv['Ma_NV'] ?></td>
-                        <td><?= $nv['Ten_NV'] ?></td>
+                        <td><?= htmlspecialchars($nv['Ma_NV']) ?></td>
+                        <td><?= htmlspecialchars($nv['Ten_NV']) ?></td>
                         <td class="text-center">
                             <?php if ($nv['Phai'] === 'NU'): ?>
                                 <img src="https://th.bing.com/th/id/R.f41f699e62e65fa68d963faf7d1f26e8?rik=McqeV6bCGlrkag&pid=ImgRaw&r=0"
-                                    alt="Nữ" width="30" height="30" class="rounded-circle">
+                                    alt="Nữ" width="30" height="30" class="rounded-circle border">
                             <?php else: ?>
                                 <img src="https://th.bing.com/th/id/OIP.vg41yG82qw84ziz5nS-CWQHaHa?rs=1&pid=ImgDetMain"
-                                    alt="Nam" width="30" height="30" class="rounded-circle">
+                                    alt="Nam" width="30" height="30" class="rounded-circle border">
                             <?php endif; ?>
                         </td>
-                        <td><?= $nv['Noi_Sinh'] ?></td>
-                        <td><?= $nv['Ma_Phong'] ?></td>
+                        <td><?= htmlspecialchars($nv['Noi_Sinh']) ?></td>
+                        <td><?= htmlspecialchars($nv['Ma_Phong']) ?></td>
                         <td><?= number_format($nv['Luong']) ?> VND</td>
                         <td>
                             <?php if (isset($_SESSION["user"]) && $_SESSION["user"]["role"] === "admin"): ?>
-                                <a href="index.php?action=edit&id=<?= $nv['Ma_NV'] ?>" class="btn btn-warning btn-sm">Sửa</a>
-                                <a href="index.php?action=confirm_delete&id=<?= $nv['Ma_NV'] ?>"
-                                    class="btn btn-danger btn-sm">Xóa</a>
+                                <a href="index.php?action=edit&id=<?= urlencode($nv['Ma_NV']) ?>"
+                                    class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil-square"></i> Sửa
+                                </a>
+                                <a href="index.php?action=confirm_delete&id=<?= urlencode($nv['Ma_NV']) ?>"
+                                    class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Xóa
+                                </a>
                             <?php else: ?>
-                                <span class="text-muted">Không có quyền</span>
+                                <span class="badge bg-secondary">Không có quyền</span>
                             <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
+
 
         </table>
 
